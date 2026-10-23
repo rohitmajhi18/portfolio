@@ -1,0 +1,229 @@
+
+
+## Role & Objective
+
+Act as a Principal Creative Developer, UI/UX Architect, and Technical SEO Specialist. Build a production-ready, interactive cybersecurity portfolio website for **Rohit Majhi**, a Cybersecurity Graduate Student specializing in Ethical Hacking, Penetration Testing, Vulnerability Assessment, Network Security, and AI-powered Intrusion Detection Systems. The website must position Rohit for **Cybersecurity Analyst** and **Penetration Tester** roles by showcasing his core offensive and defensive capabilities, live project architectures, virtual job simulations, and credentials.
+
+---
+
+## Strict AI Agent Design & Engineering Guidelines
+
+### 1. Mobile-First Architecture
+
+* **Base-Up Styling:** Write all base styles for small mobile viewports (`320px` to `480px`) first, then scale layouts progressively upward using `min-width` breakpoints (`sm: 640px`, `md: 768px`, `lg: 1024px`, `xl: 1280px`).
+* **Touch & Ergonomics:** Enforce a minimum tap target of `48px × 48px` for all interactive elements, buttons, and links. Use fluid typography via CSS `clamp()` so headings scale smoothly without horizontal overflow on mobile screens.
+* **Adaptive Stacking:** Render single-column vertical stacks with swipeable cards on mobile viewports, expanding into asymmetric bento grids and multi-column layouts only on tablet and desktop breakpoints.
+
+### 2. Universal Hamburger Menu (All Screen Sizes)
+
+* **Strict Navigation Rule:** Do **not** render a traditional horizontal navigation link bar on desktop, laptop, tablet, or mobile screens.
+* **Header Bar:** Display a fixed, glassmorphic top header across all viewports (`320px` through `2560px+`) containing only the brand identity (`RM // SEC`) on the left and a high-precision animated **Hamburger Menu Button** on the right.
+* **Command Overlay Drawer:** Clicking the hamburger toggle on any device must trigger a smooth, full-screen or slide-over cyber command overlay featuring:
+* Numbered navigation links (`01 // Overview`, `02 // What I Can Do`, `03 // Security Projects`, `04 // Technical Arsenal`, `05 // Simulations & Labs`, `06 // Credentials`, `07 // Contact`).
+* Keyboard accessibility (`Escape` key to close, focus trapping, and full `aria-expanded` / `aria-controls` attributes).
+* Quick-action links to GitHub (`[github.com/rohitmajhi18](https://github.com/rohitmajhi18)`), LinkedIn (`[linkedin.com/in/rohit-majhi18/](https://linkedin.com/in/rohit-majhi18/)`), and direct email (`rohit629510@gmail.com`).
+
+
+
+
+
+### 3. Landing Page Motion Flow & Visual Effects
+
+* **Interactive Data-Stream Background:** Implement a lightweight, GPU-accelerated HTML5 Canvas or WebGL motion-flow background on the hero landing section that visualizes live network packet routing, node-to-node threat telemetry, and subtle particle streams that react organically to cursor movement on desktop and gyroscope/scroll velocity on mobile.
+* **Scroll-Driven Motion Flow:** Use Framer Motion or GSAP ScrollTrigger for staggered section reveals, smooth momentum scrolling, and SVG circuit/pipeline lines that draw themselves dynamically as the user scrolls between sections.
+* **Micro-Interactions:** Add subtle terminal text-scramble effects on section headers, magnetic hover physics on primary CTA buttons, and animated radar/pulse indicators showing active status (`Status: Open to Cybersecurity Analyst & Penetration Tester Roles`).
+
+
+* **Performance Guardrails:** Respect `prefers-reduced-motion` media queries and pause canvas animations when off-screen using `IntersectionObserver` to maintain 60 FPS on mobile devices.
+
+### 4. Visual Identity & Color System
+
+* **Theme:** High-contrast Dark Cyber Operations aesthetic.
+* **Palette:**
+* Primary Background: Deep Obsidian (`#06090E`)
+* Elevated Surface / Bento Cards: Translucent Slate (`rgba(15, 23, 42, 0.65)`) with `1px solid rgba(56, 189, 248, 0.18)` borders and `backdrop-filter: blur(12px)`
+* Primary Accent: Cyber Cyan (`#00F0FF`) for active nodes and network telemetry
+* Secondary Accent: Threat Matrix Emerald (`#10B981`) for defensive/SOC metrics and Alert Crimson (`#F43F5E`) for offensive/red-team highlights
+
+
+* **Typography:** Pair a geometric display sans-serif (`Space Grotesk` or `Inter`) for scannable body copy with a crisp technical monospace (`JetBrains Mono` or `Fira Code`) for metadata, tool tags, and terminal prompts.
+
+### 5. Technical SEO & Accessibility Standards
+
+* **Semantic HTML5:** Structure the DOM strictly with `<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, and `<footer>`, using a single `<h1>` in the Hero section and logical `<h2>`–`<h3>` hierarchy throughout.
+* **Metadata & Social Graph:** Include optimized `<title>`, `<meta name="description">`, canonical URLs, OpenGraph (`og:title`, `og:description`, `og:type`, `og:image`), and Twitter Card tags targeting keywords: *Rohit Majhi, Cybersecurity Analyst, Penetration Tester, Ethical Hacker, Network Security, Cloud SOC, Intrusion Detection Systems*.
+
+
+* **Structured Data (JSON-LD):** Embed valid `Schema.org` JSON-LD scripts for `Person` (listing Rohit Majhi's education, skills, alumni status, and social profiles) and `SoftwareSourceCode` (for his GitHub security projects).
+
+
+
+---
+
+## Website Structure & Resume Content Specification
+
+### Section 1: Hero Landing Section
+
+* **Headline:** Rohit Majhi — Securing Networks, Cloud Infrastructure & AI-Driven Defense.
+
+
+* **Sub-headline:** Cybersecurity graduate student with hands-on experience in Ethical Hacking, Penetration Testing, Vulnerability Assessment, Network Security, and AI-powered Intrusion Detection Systems. Proficient in Python, Kali Linux, Git, Active Directory, Cloud Security, and risk assessment.
+
+
+* **Primary CTAs:** "Explore Security Architectures" (scrolls to Projects), "Download Resume", and "Initiate Contact".
+* **Location & Availability Badge:** Hooghly, West Bengal, India | Open to Cybersecurity Analyst & Penetration Tester Roles.
+
+
+
+### Section 2: "What I Can Do" (Core Capabilities & Services)
+
+Present these 6 actionable service pillars in an interactive bento grid with motion-flow hover states:
+
+1. **Penetration Testing & Ethical Hacking:** Conducting comprehensive network penetration testing and application security testing aligned with the OWASP Top 10 using Kali Linux, Metasploit, Burp Suite, and Nmap to uncover exploitable weaknesses before adversaries do.
+
+
+2. **Vulnerability Assessment & Risk Management:** Executing systematic vulnerability scans with Nessus, analyzing threat exposure, and performing enterprise cybersecurity risk assessments and cryptography-backed remediation planning.
+
+
+3. **AI-Powered Intrusion Detection (IDS) & Network Defense:** Designing machine-learning threat classification pipelines and inspecting deep packet traffic via Wireshark to detect anomalous network behavior in real time.
+
+
+4. **Cloud SOC & Automated Incident Response:** Architecting serverless cloud security pipelines on AWS using GuardDuty, CloudTrail, VPC Flow Logs, EventBridge, Lambda, and Terraform to automate threat normalization and instance containment.
+
+
+5. **SIEM Monitoring, Threat Hunting & APT Analysis:** Proactive cyber threat hunting, APT breach analysis, and security event correlation using SIEM platforms such as Splunk and Microsoft Sentinel.
+
+
+6. **Identity & Access Management (IAM) & Phishing Defense:** Assessing IAM strategies, designing custom IAM solutions, and engineering phishing simulations to harden organizational security awareness and incident response readiness.
+
+
+
+### Section 3: Featured Security Projects (Interactive Architecture Cards)
+
+Render each project with an interactive architecture flow diagram and direct GitHub link:
+
+* **Project 01: NetSentinel AI — AI-Based Network Intrusion Detection System** (`Jun 2026`)
+
+
+* **Tech Stack:** Python, Machine Learning, Scikit-learn, Flask, Cybersecurity, Network Security, GitHub (Team Size: 2).
+
+
+* **Impact & Architecture:** Developed an AI-powered Intrusion Detection System (IDS) using Python, Flask, and Scikit-learn to detect and classify network threats. Applied machine learning model evaluation techniques to improve detection accuracy for network intrusion classification.
+
+
+* **Repository:** `[https://github.com/rohitmajhi18/NetSentinel-AI](https://github.com/rohitmajhi18/NetSentinel-AI)`.
+
+
+
+
+* **Project 02: AWS Cloud Intrusion Detection & Automated Incident Response Platform**
+
+* **Tech Stack:** AWS (Amazon GuardDuty, CloudTrail, VPC Flow Logs, EventBridge, Lambda, S3), Terraform, Python, GitHub.
+
+
+* **Impact & Architecture:** Built a serverless, Free-Tier-conscious AWS SOC platform covering the full security lifecycle: threat detection, event normalization, incident creation, and automated response. Ingested threat findings from GuardDuty, CloudTrail, and VPC Flow Logs, routing them through EventBridge to a Lambda function that normalizes each finding and stores it as a JSON incident record in S3. Automated containment with a second Lambda that isolates compromised EC2 instances by applying a restrictive isolation Security Group, deploying the entire stack as Infrastructure as Code using Terraform.
+
+
+* **Repository:** `[https://github.com/rohitmajhi18/aws-soc](https://github.com/rohitmajhi18/aws-soc)`.
+
+
+
+
+
+### Section 4: Technical Arsenal (Categorized Skill Matrix)
+
+* **Security Operations:** Ethical Hacking, Penetration Testing, Network Penetration Testing, Vulnerability Assessment, Risk Management, Cryptography Fundamentals, Cyber Threat Hunting.
+
+
+* **Tools & Platforms:** Kali Linux, Cloud Security, GitHub, Nmap, Burp Suite, Wireshark, Metasploit, Nessus, OWASP Top 10, SIEM (Splunk or Microsoft Sentinel).
+
+
+* **Core Domains:** Network Security, Intrusion Detection Systems (IDS), Information Security Management, APT Breach Analysis.
+
+
+* **Programming & Automation:** Python, Flask, Scikit-learn, Terraform (IaC), Git, Active Directory.
+
+
+
+### Section 5: Industry Job Simulations (Interactive Timeline / Case Filters)
+
+Showcase practical enterprise simulations completed on Forage:
+
+* **Datacom — Cybersecurity Job Simulation:** Executed APT breach analysis, cybersecurity risk assessment, and information security management.
+
+
+* **Deloitte — Cyber Job Simulation:** Performed cybersecurity risk assessment, threat analysis, and security best practices evaluation.
+
+
+* **Mastercard — Cybersecurity Job Simulation:** Designed phishing email simulations and analyzed phishing campaign results to strengthen cybersecurity awareness, threat detection, and incident response skills.
+
+
+* **TATA — Cybersecurity Analyst Job Simulation:** Focused on Identity and Access Management (IAM), IAM strategy assessment, custom IAM solution design, and platform integration.
+
+
+* **AWS — Solutions Architecture Job Simulation:** Designed scalable cloud hosting architecture while applying core cloud architecture principles, infrastructure planning, and solution design best practices.
+
+
+* **Accenture — Strategy Consulting Job Simulation:** Conducted market research, profitability analysis, and strategic decision-making.
+
+
+
+### Section 6: Education & Certifications
+
+* **Academic Timeline:**
+* **M.Sc. Cyber Security Forensic (PICA)** — Parul University (`2025–Present`, CGPA: `7.13/10`).
+
+
+* **B.Sc. Advanced Networking & Cyber Security** — Brainware University, Kolkata (`2022–2025`, CGPA: `6.42/10`).
+
+
+* **12th (WBSCVET)** — Jamaibati High School, Hooghly (`2022`, Percentage: `63.20/100`).
+
+
+
+
+* **Certifications & Training Vault:**
+* Value Added Course on Ethical Hacking — Indian School of Ethical Hacking (ISOEH), Score: `79/100`, Grade `A+`.
+
+
+* Industrial Training on Network Penetration Testing Level 1 — Indian School of Ethical Hacking (ISOEH), Score: `78/100`, Grade `A+`.
+
+
+* Security Risk Management & Cryptography Fundamentals — Total Seminars, Coursera.
+
+
+* Foundations of Cybersecurity — Google, Coursera.
+
+
+* Introduction to Cybersecurity Careers — IBM, Coursera.
+
+
+* Introduction to Ethical Hacking Principles — Skill Up, Coursera.
+
+
+* Sales and CRM Overview — Salesforce & Pathstream, Coursera.
+
+
+
+
+
+### Section 7: Beyond the Terminal (Interests) & Contact Terminal
+
+* **Technical Pursuits & Creative Edge:** Highlight active engagement in Bug Bounty hunting, Tech Blogging, and Open-Source Contribution, alongside creative expertise in Video Editing, Photography, and Cinematography.
+
+
+* **Interactive Contact Terminal:** Build a sleek contact form alongside direct links:
+* **Email:** `rohit629510@gmail.com`
+
+* **Phone:** `+91-6295103573`
+
+* **LinkedIn:** `[linkedin.com/in/rohit-majhi18/](https://linkedin.com/in/rohit-majhi18/)`
+
+* **GitHub:** `[github.com/rohitmajhi18](https://github.com/rohitmajhi18)`
+
+* **Location:** Hooghly, West Bengal, India 712405
+
+
+
+
+
