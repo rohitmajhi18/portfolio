@@ -842,6 +842,95 @@ main {
   letter-spacing: 0.06em;
 }
 
+/* Hero Operator Biometric Profile Card */
+.hero-operator-card {
+  position: relative;
+  background: rgba(13, 20, 36, 0.75);
+  border: 1px solid var(--border-cyan-bright);
+  border-radius: 20px;
+  padding: 18px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 0 35px rgba(0, 240, 255, 0.2), 0 25px 50px rgba(0, 0, 0, 0.85);
+  max-width: 440px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.operator-img-wrapper {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 240, 255, 0.4);
+  background: #06090e;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+.operator-avatar-img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  filter: contrast(1.04) brightness(0.98);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-operator-card:hover .operator-avatar-img {
+  transform: scale(1.03);
+}
+
+.operator-scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent 0%, var(--cyber-cyan) 50%, transparent 100%);
+  box-shadow: 0 0 15px var(--cyber-cyan);
+  animation: scan-sweep 3.8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.operator-corner-bracket {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: var(--cyber-cyan);
+  border-style: solid;
+  pointer-events: none;
+  z-index: 3;
+}
+.bracket-tl { top: 10px; left: 10px; border-width: 2px 0 0 2px; }
+.bracket-tr { top: 10px; right: 10px; border-width: 2px 2px 0 0; }
+.bracket-bl { bottom: 10px; left: 10px; border-width: 0 0 2px 2px; }
+.bracket-br { bottom: 10px; right: 10px; border-width: 0 2px 2px 0; }
+
+.operator-info-footer {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.operator-id-tag {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--cyber-cyan);
+  letter-spacing: 0.05em;
+}
+
+.operator-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
 /* --------------------------------------------------------------------------
    08. SECTION 2: "WHAT I CAN DO" (CORE CAPABILITIES BENTO GRID)
    -------------------------------------------------------------------------- */
@@ -1497,6 +1586,125 @@ main {
   width: fit-content;
 }
 
+/* Certificate View Trigger Button */
+.btn-view-cert {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: auto;
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid var(--border-cyan-subtle);
+  color: var(--cyber-cyan);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-view-cert:hover {
+  background: var(--cyber-cyan);
+  color: var(--bg-obsidian);
+  border-color: var(--cyber-cyan);
+  box-shadow: 0 0 15px var(--cyber-cyan-glow);
+  transform: translateY(-1px);
+}
+
+/* Certificate Detail & Preview Modal */
+.cert-modal-box {
+  width: 100%;
+  max-width: 960px;
+  max-height: 94vh;
+  background: linear-gradient(180deg, #0a1120 0%, #05080e 100%);
+  border: 1px solid var(--border-cyan-bright);
+  border-radius: 16px;
+  box-shadow: 0 0 60px rgba(0, 240, 255, 0.25), 0 25px 60px rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: scale(0.95);
+  transition: transform var(--transition-normal);
+}
+
+.modal-backdrop.is-open .cert-modal-box {
+  transform: scale(1);
+}
+
+.cert-preview-viewport {
+  width: 100%;
+  min-height: 380px;
+  max-height: 56vh;
+  background: #03060a;
+  border: 1px solid var(--border-cyan-subtle);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.cert-preview-img {
+  max-width: 100%;
+  max-height: 54vh;
+  object-fit: contain;
+  border-radius: 6px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+}
+
+.cert-preview-iframe {
+  width: 100%;
+  height: 54vh;
+  min-height: 400px;
+  border: none;
+  border-radius: 6px;
+  background: #0f172a;
+}
+
+.cert-modal-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--border-slate-subtle);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+
+.cert-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cert-meta-label {
+  color: var(--text-dim);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+}
+
+.cert-meta-value {
+  color: var(--text-pure);
+  font-weight: 600;
+}
+
+.cert-actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-slate-subtle);
+}
+
 /* --------------------------------------------------------------------------
    13. SECTION 7: BEYOND THE TERMINAL & INTERACTIVE CONTACT TERMINAL
    -------------------------------------------------------------------------- */
@@ -1898,6 +2106,13 @@ main {
 
 /* lg: 1024px and up */
 @media (min-width: 1024px) {
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: center;
+    gap: 48px;
+  }
+
   .capabilities-grid {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -1937,6 +2152,12 @@ main {
 /* --------------------------------------------------------------------------
    17. KEYFRAME ANIMATIONS & ACCESSIBILITY GUARDRAILS
    -------------------------------------------------------------------------- */
+@keyframes scan-sweep {
+  0% { top: 0%; opacity: 0.2; }
+  50% { top: 100%; opacity: 1; }
+  100% { top: 0%; opacity: 0.2; }
+}
+
 @keyframes radar-sweep {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }

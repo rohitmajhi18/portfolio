@@ -464,7 +464,134 @@
   }
 
   /* ------------------------------------------------------------------------
-     11. LIVE SYSTEM CLOCK (UTC / LOCAL)
+     12. CERTIFICATE DETAIL & PREVIEW MODAL CONTROLLER
+     ------------------------------------------------------------------------ */
+  const certModal = document.getElementById('cert-modal');
+  const btnCloseCert = document.getElementById('btn-close-cert');
+  const certModalName = document.getElementById('cert-modal-name');
+  const certModalIssuer = document.getElementById('cert-modal-issuer');
+  const certMetaOrg = document.getElementById('cert-meta-org');
+  const certMetaStatus = document.getElementById('cert-meta-status');
+  const certMetaGrade = document.getElementById('cert-meta-grade');
+  const certMetaFormat = document.getElementById('cert-meta-format');
+  const certMetaFileLabel = document.getElementById('cert-meta-file-label');
+  const certViewport = document.getElementById('cert-viewport');
+  const btnCertOpen = document.getElementById('btn-cert-open');
+  const btnCertDownload = document.getElementById('btn-cert-download');
+  const btnCertCopyLink = document.getElementById('btn-cert-copy-link');
+  let currentCertSrc = '';
+
+  function openCertModal(btn) {
+    if (!certModal) return;
+
+    const title = btn.getAttribute('data-cert-title') || 'Certificate Verification';
+    const issuer = btn.getAttribute('data-cert-issuer') || 'Accredited Authority';
+    const type = btn.getAttribute('data-cert-type') || 'pdf';
+    const src = btn.getAttribute('data-cert-src') || '';
+    const grade = btn.getAttribute('data-cert-grade') || 'Verified Credential';
+
+    currentCertSrc = src;
+
+    // Update labels and metadata
+    if (certModalName) certModalName.innerHTML = title;
+    if (certModalIssuer) certModalIssuer.innerHTML = issuer;
+    if (certMetaOrg) certMetaOrg.innerHTML = issuer;
+    if (certMetaGrade) certMetaGrade.innerHTML = grade;
+    if (certMetaStatus) certMetaStatus.textContent = 'VERIFIED GENUINE // ACCREDITED';
+    if (certMetaFormat) {
+      certMetaFormat.textContent = type === 'image' ? 'High-Res Scan (Image)' : 'PDF Vector Document';
+    }
+    if (certMetaFileLabel) {
+      certMetaFileLabel.textContent = decodeURIComponent(src);
+    }
+
+    // Direct Action Links
+    if (btnCertOpen) {
+      btnCertOpen.href = src;
+    }
+    if (btnCertDownload) {
+      btnCertDownload.href = src;
+      const cleanFileName = (title.replace(/<[^>]*>?/gm, '').replace(/[^a-zA-Z0-9_\-\s]/g, '').trim()) + (type === 'image' ? '.jpg' : '.pdf');
+      btnCertDownload.setAttribute('download', cleanFileName);
+    }
+
+    // Render Preview
+    if (certViewport) {
+      certViewport.innerHTML = '';
+      if (type === 'image') {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = title.replace(/<[^>]*>?/gm, '');
+        img.className = 'cert-preview-img';
+        img.loading = 'eager';
+        certViewport.appendChild(img);
+      } else {
+        const iframe = document.createElement('iframe');
+        iframe.src = src;
+        iframe.title = title.replace(/<[^>]*>?/gm, '');
+        iframe.className = 'cert-preview-iframe';
+        certViewport.appendChild(iframe);
+      }
+    }
+
+    // Show Modal
+    certModal.classList.add('is-open');
+    certModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    if (window.CyberAudio) window.CyberAudio.playClick();
+  }
+
+  function closeCertModal() {
+    if (!certModal) return;
+    certModal.classList.remove('is-open');
+    certModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    // Free resources
+    if (certViewport) {
+      certViewport.innerHTML = '';
+    }
+    if (window.CyberAudio) window.CyberAudio.playClick();
+  }
+
+  // Bind all certificate trigger buttons
+  const certButtons = document.querySelectorAll('.btn-view-cert');
+  certButtons.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openCertModal(btn);
+    });
+  });
+
+  if (btnCloseCert) {
+    btnCloseCert.addEventListener('click', closeCertModal);
+  }
+
+  if (certModal) {
+    certModal.addEventListener('click', (e) => {
+      if (e.target === certModal) closeCertModal();
+    });
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && certModal.classList.contains('is-open')) {
+        closeCertModal();
+      }
+    });
+  }
+
+  if (btnCertCopyLink) {
+    btnCertCopyLink.addEventListener('click', () => {
+      if (!currentCertSrc) return;
+      const fullUrl = window.location.origin + '/' + currentCertSrc;
+      navigator.clipboard.writeText(fullUrl).then(() => {
+        showToast('Document link copied to clipboard!');
+        if (window.CyberAudio) window.CyberAudio.playSuccess();
+      }).catch(() => {
+        showToast('Relative path: ' + currentCertSrc);
+      });
+    });
+  }
+
+  /* ------------------------------------------------------------------------
+     13. LIVE SYSTEM CLOCK (UTC / LOCAL)
      ------------------------------------------------------------------------ */
   function updateSystemClock() {
     const clockElements = document.querySelectorAll('[data-live-clock]');
@@ -481,3 +608,4 @@
   setInterval(updateSystemClock, 1000);
   updateSystemClock();
 })();
+

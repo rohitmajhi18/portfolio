@@ -42,8 +42,10 @@ Education: M.Sc. Cyber Security Forensic (Parul Univ) | B.Sc. Networking & Cyber
 
     projects: `Flagship Architectures:
   01. <span style="color:#00F0FF;">NetSentinel AI</span>: Machine learning network intrusion detection system (Flask, Scikit-learn, PCAP classification)
+      Live App: <a href="https://netsentinelai.vercel.app/" target="_blank" style="color:#00F0FF;text-decoration:underline;">https://netsentinelai.vercel.app/</a>
       Repo: https://github.com/rohitmajhi18/NetSentinel-AI
   02. <span style="color:#00F0FF;">AWS Cloud SOC</span>: Serverless threat ingestion & automated incident containment (GuardDuty, EventBridge, Lambda, Terraform)
+      Live App: <a href="https://aws-soc.vercel.app/" target="_blank" style="color:#00F0FF;text-decoration:underline;">https://aws-soc.vercel.app/</a>
       Repo: https://github.com/rohitmajhi18/aws-soc`,
 
     simulations: `Enterprise Simulations (Forage):
