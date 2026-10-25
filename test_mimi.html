@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mimi 3D Test</title>
+  <style>
+    body {
+      margin: 0;
+      background: #06090e;
+      color: #fff;
+      font-family: 'JetBrains Mono', monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    #stage-card {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(0, 240, 255, 0.25);
+      border-radius: 20px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 30px rgba(0, 240, 255, 0.1);
+      backdrop-filter: blur(16px);
+      max-width: 620px;
+      width: 90%;
+    }
+    .badge {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: #00f0ff;
+      text-transform: uppercase;
+      background: rgba(0, 240, 255, 0.1);
+      padding: 4px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      margin-bottom: 8px;
+    }
+    h2 {
+      margin: 4px 0 8px;
+      font-size: 22px;
+      color: #fff;
+      text-align: center;
+    }
+    p.desc {
+      font-size: 13px;
+      color: #94a3b8;
+      text-align: center;
+      max-width: 480px;
+      margin: 0 0 16px;
+      line-height: 1.5;
+    }
+    #canvas-container {
+      width: 320px;
+      height: 340px;
+      position: relative;
+      cursor: grab;
+      touch-action: none;
+      user-select: none;
+    }
+    #canvas-container:active {
+      cursor: grabbing;
+    }
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    #poster {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+      opacity: 1;
+    }
+    #poster.hidden {
+      opacity: 0;
+    }
+    .halo {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 180px;
+      height: 40px;
+      background: radial-gradient(ellipse at center, rgba(0, 240, 255, 0.35) 0%, rgba(16, 185, 129, 0.15) 50%, transparent 80%);
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(6px);
+    }
+    .anim-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+      margin-top: 16px;
+      max-width: 540px;
+    }
+    .btn-anim {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      color: #cbd5e1;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+    .btn-anim:hover {
+      background: rgba(0, 240, 255, 0.15);
+      border-color: #00f0ff;
+      color: #fff;
+      transform: translateY(-1px);
+    }
+    .btn-anim.active {
+      background: #00f0ff;
+      color: #06090e;
+      border-color: #00f0ff;
+      font-weight: bold;
+    }
+    #speech-bubble {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(6, 9, 14, 0.92);
+      border: 1px solid rgba(0, 240, 255, 0.4);
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-size: 12px;
+      color: #00f0ff;
+      white-space: nowrap;
+      pointer-events: none;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+      opacity: 0;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    #speech-bubble.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-5px);
+    }
+    .stats-bar {
+      display: flex;
+      gap: 16px;
+      font-size: 11px;
+      color: #64748b;
+      margin-top: 12px;
+    }
+    .stat-item span {
+      color: #10b981;
+    }
+  </style>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <div id="stage-card">
+    <div class="badge">Blender 3D &bull; WebGL Live Runtime</div>
+    <h2>Our Own 3D Guide</h2>
+    <p class="desc">Rigged in Blender, running live in the browser. You've met her. 1.5 MB, 12 animations. Drag her and she spins.</p>
+
+    <div id="canvas-container">
+      <div class="halo"></div>
+      <img id="poster" src="image/mimi-hero.webp" alt="Mimi 3D Guide Poster">
+      <div id="speech-bubble">Hi! Drag me to spin!</div>
+      <canvas id="mimi-canvas"></canvas>
+    </div>
+
+    <div class="anim-buttons" id="anim-btn-container"></div>
+
+    <div class="stats-bar">
+      <div class="stat-item">SIZE: <span>1.48 MB</span></div>
+      <div class="stat-item">CLIPS: <span>12</span></div>
+      <div class="stat-item">STATE: <span id="stat-state">IDLE</span></div>
+      <div class="stat-item">DRAG: <span>ACTIVE</span></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+    import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+
+    const container = document.getElementById('canvas-container');
+    const canvas = document.getElementById('mimi-canvas');
+    const poster = document.getElementById('poster');
+    const bubble = document.getElementById('speech-bubble');
+    const btnContainer = document.getElementById('anim-btn-container');
+    const stateEl = document.getElementById('stat-state');
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(26, container.clientWidth / container.clientHeight, 0.01, 10);
+    camera.position.set(0, 0.11, 0.52);
+    camera.lookAt(0, 0.095, 0);
+
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.05;
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    // Lighting setup
+    const ambLight = new THREE.AmbientLight(0xffffff, 0.8);
+    scene.add(ambLight);
+
+    const keyLight = new THREE.DirectionalLight(0xfff6ec, 1.8);
+    keyLight.position.set(-0.25, 0.85, 0.5);
+    keyLight.castShadow = true;
+    keyLight.shadow.mapSize.set(1024, 1024);
+    keyLight.shadow.bias = -0.0004;
+    scene.add(keyLight);
+
+    const fillLight = new THREE.DirectionalLight(0x00f0ff, 1.2);
+    fillLight.position.set(0.6, 0.25, 0.4);
+    scene.add(fillLight);
+
+    const rimLight = new THREE.DirectionalLight(0x10b981, 1.0);
+    rimLight.position.set(0, 0.3, -0.6);
+    scene.add(rimLight);
+
+    // Subtle ground shadow plane
+    const shadowGeo = new THREE.CircleGeometry(0.22, 32);
+    const shadowMat = new THREE.ShadowMaterial({ opacity: 0.3 });
+    const shadowMesh = new THREE.Mesh(shadowGeo, shadowMat);
+    shadowMesh.rotation.x = -Math.PI / 2;
+    shadowMesh.position.y = 0.001;
+    shadowMesh.receiveShadow = true;
+    scene.add(shadowMesh);
+
+    // Pivot group
+    const pivot = new THREE.Group();
+    pivot.position.y = 0.09;
+    scene.add(pivot);
+
+    let mixer, currentAction = null;
+    const actions = {};
+    const animNames = ['wave', 'hop', 'think', 'look_around', 'nod', 'point_left', 'point_right', 'ear_wiggle', 'travel', 'settle', 'blink'];
+
+    const loader = new GLTFLoader();
+    loader.setMeshoptDecoder(MeshoptDecoder);
+
+    loader.load('models/mimi.glb', (gltf) => {
+      const model = gltf.scene;
+      model.position.y = -0.09;
+      pivot.add(model);
+
+      model.traverse((child) => {
+        if (child.isMesh) {
+          child.castShadow = true;
+          child.receiveShadow = true;
+          if (child.material && child.material.map) {
+            child.material.map.anisotropy = renderer.capabilities.getMaxAnisotropy();
+          }
+        }
+      });
+
+      mixer = new THREE.AnimationMixer(model);
+
+      gltf.animations.forEach((clip) => {
+        const action = mixer.clipAction(clip);
+        actions[clip.name] = action;
+        if (clip.name !== 'idle') {
+          action.loop = THREE.LoopOnce;
+          action.clampWhenFinished = true;
+        }
+      });
+
+      if (actions.idle) {
+        actions.idle.play();
+        currentAction = actions.idle;
+      }
+
+      // Hide poster on load
+      poster.classList.add('hidden');
+      showBubble('👋 Welcome! Drag me to spin!', 3000);
+
+      buildButtons();
+
+      // Periodic blink
+      setInterval(() => {
+        if (actions.blink && currentAction === actions.idle) {
+          actions.blink.reset().play();
+        }
+      }, 4000 + Math.random() * 3000);
+
+    }, undefined, (err) => {
+      console.warn('Fallback to poster:', err);
+    });
+
+    function playAnim(name, speechText) {
+      if (!actions[name] || !mixer) return;
+      const nextAction = actions[name];
+
+      if (currentAction && currentAction !== nextAction) {
+        nextAction.reset();
+        nextAction.crossFadeFrom(currentAction, 0.25, true);
+        nextAction.play();
+      } else {
+        nextAction.reset().play();
+      }
+
+      currentAction = nextAction;
+      stateEl.textContent = name.toUpperCase();
+
+      if (speechText) {
+        showBubble(speechText, 2500);
+      }
+
+      const onFinished = (e) => {
+        if (e.action === nextAction && name !== 'idle') {
+          mixer.removeEventListener('finished', onFinished);
+          if (actions.idle) {
+            actions.idle.reset();
+            actions.idle.crossFadeFrom(nextAction, 0.35, true);
+            actions.idle.play();
+            currentAction = actions.idle;
+            stateEl.textContent = 'IDLE';
+          }
+        }
+      };
+      mixer.addEventListener('finished', onFinished);
+    }
+
+    const dialogueMap = {
+      wave: '👋 Hello there! Great to meet you!',
+      hop: '🎉 Yay! Running live in the browser!',
+      think: '🤔 Analyzing cybersecurity vectors...',
+      look_around: '👀 Scanning network perimeter for anomalies...',
+      nod: '✅ Confirmed! 100% production ready.',
+      point_left: '👈 Check out Rohit\'s core capabilities!',
+      point_right: '👉 NetSentinel AI is right over here!',
+      ear_wiggle: '📡 Telemetry signal received!',
+      travel: '🚀 Moving into position...',
+      settle: '🧘 Standing guard at the terminal.'
+    };
+
+    function buildButtons() {
+      animNames.forEach((name) => {
+        if (!actions[name]) return;
+        const btn = document.createElement('button');
+        btn.className = 'btn-anim';
+        btn.textContent = name.replace('_', ' ');
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.btn-anim').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          setTimeout(() => btn.classList.remove('active'), 1200);
+          playAnim(name, dialogueMap[name] || `Playing ${name}!`);
+        });
+        btnContainer.appendChild(btn);
+      });
+    }
+
+    let bubbleTimer = null;
+    function showBubble(text, duration = 3000) {
+      clearTimeout(bubbleTimer);
+      bubble.textContent = text;
+      bubble.classList.add('visible');
+      bubbleTimer = setTimeout(() => {
+        bubble.classList.remove('visible');
+      }, duration);
+    }
+
+    // Drag-to-spin physics
+    const drag = {
+      active: false,
+      pointerId: null,
+      startX: 0,
+      targetSpin: 0,
+      currentSpin: 0,
+      velocity: 0,
+      lastX: 0,
+      moved: false
+    };
+
+    container.addEventListener('pointerdown', (e) => {
+      drag.active = true;
+      drag.pointerId = e.pointerId;
+      drag.startX = e.clientX;
+      drag.lastX = e.clientX;
+      drag.velocity = 0;
+      drag.moved = false;
+      container.setPointerCapture?.(e.pointerId);
+    });
+
+    window.addEventListener('pointermove', (e) => {
+      if (!drag.active) {
+        // Pointer parallax tilt
+        const rect = container.getBoundingClientRect();
+        const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+        const ny = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
+        if (nx >= -1.5 && nx <= 1.5 && ny >= -1.5 && ny <= 1.5) {
+          pivot.rotation.x = -ny * 0.1;
+        }
+        return;
+      }
+
+      const dx = e.clientX - drag.lastX;
+      drag.lastX = e.clientX;
+      drag.velocity = dx;
+
+      if (Math.abs(e.clientX - drag.startX) > 4) {
+        drag.moved = true;
+      }
+
+      drag.targetSpin += (dx / container.clientWidth) * Math.PI * 1.8;
+    });
+
+    const onPointerUp = (e) => {
+      if (drag.active && e.pointerId === drag.pointerId) {
+        drag.active = false;
+        container.releasePointerCapture?.(e.pointerId);
+
+        // Apply inertia velocity
+        drag.targetSpin += (drag.velocity / container.clientWidth) * Math.PI * 4;
+
+        if (!drag.moved) {
+          // Tap / click triggers wave or hop!
+          const r = Math.random();
+          if (r < 0.4) playAnim('wave', dialogueMap.wave);
+          else if (r < 0.7) playAnim('hop', dialogueMap.hop);
+          else playAnim('nod', dialogueMap.nod);
+        } else {
+          showBubble('🌀 Wheee! Look at me spin!', 2000);
+        }
+      }
+    };
+
+    window.addEventListener('pointerup', onPointerUp);
+    window.addEventListener('pointercancel', onPointerUp);
+
+    const clock = new THREE.Clock();
+    function animate() {
+      requestAnimationFrame(animate);
+      const delta = clock.getDelta();
+
+      if (mixer) mixer.update(delta);
+
+      // Smooth inertia spin damping
+      drag.currentSpin += (drag.targetSpin - drag.currentSpin) * 0.08;
+      pivot.rotation.y = drag.currentSpin;
+
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = container.clientWidth / container.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+  </script>
+</body>
+</html>

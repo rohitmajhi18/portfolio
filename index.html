@@ -51,6 +51,16 @@
   <!-- Stylesheet -->
   <link rel="stylesheet" href="styles/main.css">
 
+  <!-- Three.js + GLTFLoader + MeshoptDecoder Import Map for 3D Guide Mimi -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+
   <!-- ====================================================================
        STRUCTURED DATA (JSON-LD SCHEMA.ORG)
        ==================================================================== -->
@@ -134,6 +144,28 @@
 </head>
 
 <body>
+  <!-- ====================================================================
+       MIMI 3D COMPANION // LIVE BROWSER OVERLAY CHARACTER
+       "Rigged in Blender, running live in the browser.
+        1.5 MB, 12 animations. Drag her and she spins."
+       ==================================================================== -->
+  <aside id="mimi-overlay" class="mimi-overlay-host" role="region" aria-label="Mimi, 3D interactive companion. Drag to spin or click to interact.">
+    <div class="mimi-overlay-inner" id="mimi-overlay-inner">
+      <div class="mimi-overlay-halo" aria-hidden="true"></div>
+
+      <!-- Speech Bubble that follows Mimi -->
+      <div id="mimi-overlay-bubble" class="mimi-overlay-bubble" role="status" aria-live="polite" aria-hidden="true">
+        <span id="mimi-overlay-bubble-text"></span>
+      </div>
+
+      <!-- Poster image during initial WebGL load -->
+      <img id="mimi-overlay-poster" src="image/mimi-dock.webp" alt="Mimi 3D Character" class="mimi-overlay-poster" width="220" height="220" loading="eager">
+
+      <!-- Three.js Canvas -->
+      <canvas id="mimi-overlay-canvas" class="mimi-overlay-canvas"></canvas>
+    </div>
+  </aside>
+
 
   <!-- Ambient Cyber Scanline Overlay -->
   <div class="cyber-grid-scan" aria-hidden="true"></div>
@@ -165,7 +197,7 @@
 
       <!-- Header Controls & Universal Hamburger Toggle Right -->
       <div class="header-actions">
-        <!-- Interactive Terminal Modal Summoner -->
+<!-- Interactive Terminal Modal Summoner -->
         <button type="button" class="hud-btn" id="btn-open-terminal" title="Summon Cyber Terminal (Ctrl+K)"
           aria-label="Open Cyber Terminal">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -231,7 +263,7 @@
             <span class="drawer-nav-arrow" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="drawer-nav-item">
+<li class="drawer-nav-item">
           <a href="#capabilities" class="drawer-nav-link" id="nav-link-capabilities">
             <span><span class="nav-num">02 //</span> What I Can Do</span>
             <span class="drawer-nav-arrow" aria-hidden="true">&rarr;</span>
@@ -399,7 +431,7 @@
                 </svg>
                 Initiate Contact
               </a>
-            </div>
+</div>
 
             <!-- Hero Cyber HUD Telemetry Metrics Bar -->
             <div class="hero-hud-metrics" aria-label="Key Security Capabilities Overview">
@@ -692,6 +724,7 @@
                 </span>
               </div>
 
+              <div class="arch-scroll-indicator" aria-hidden="true">&larr; Swipe to explore pipeline flow &rarr;</div>
               <div class="pipeline-diagram">
                 <svg viewBox="0 0 740 120" xmlns="http://www.w3.org/2000/svg">
                   <!-- Connection Paths -->
@@ -821,6 +854,7 @@
                 </span>
               </div>
 
+              <div class="arch-scroll-indicator" aria-hidden="true">&larr; Swipe to explore pipeline flow &rarr;</div>
               <div class="pipeline-diagram">
                 <svg viewBox="0 0 740 120" xmlns="http://www.w3.org/2000/svg">
                   <!-- Connection Paths -->
@@ -2119,7 +2153,7 @@
               Accreditation Record</div>
           </div>
         </div>
-        <div style="display:flex;align-items:center;gap:8px;">
+        <div class="modal-header-actions">
           <a id="btn-cert-open" href="#" target="_blank" rel="noopener noreferrer" class="btn-cyber-primary"
             style="height:36px;padding:0 14px;font-size:0.8rem;text-decoration:none;"
             aria-label="Open Document in New Tab">
@@ -2129,7 +2163,7 @@
               <polyline points="15 3 21 3 21 9"></polyline>
               <line x1="10" y1="14" x2="21" y2="3"></line>
             </svg>
-            Open in Tab
+            <span class="btn-text">Open in Tab</span>
           </a>
           <a id="btn-cert-download" href="#" download class="btn-cyber-ghost"
             style="height:36px;padding:0 14px;font-size:0.8rem;text-decoration:none;" aria-label="Download Document">
@@ -2139,7 +2173,7 @@
               <polyline points="7 10 12 15 17 10"></polyline>
               <line x1="12" y1="15" x2="12" y2="3"></line>
             </svg>
-            Download
+            <span class="btn-text">Download</span>
           </a>
           <button type="button" class="modal-close-btn" id="btn-close-cert" aria-label="Close Certificate Modal">
             &times;
@@ -2241,7 +2275,7 @@
           </svg>
           <span>CURRICULUM VITAE // ROHIT MAJHI</span>
         </div>
-        <div style="display:flex;align-items:center;gap:8px;">
+        <div class="modal-header-actions">
           <button type="button" class="btn-cyber-primary" id="btn-print-resume"
             style="height:36px;padding:0 14px;font-size:0.8rem;">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -2250,7 +2284,7 @@
               <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
               <rect x="6" y="14" width="12" height="8"></rect>
             </svg>
-            Print / Save PDF
+            <span class="btn-text">Print / Save PDF</span>
           </button>
           <button type="button" class="modal-close-btn" id="btn-close-resume" aria-label="Close Resume Modal">
             &times;
@@ -2262,8 +2296,7 @@
 
         <!-- Printable Resume Document -->
         <div id="printable-resume">
-          <div
-            style="border-bottom:1px solid var(--border-cyan-subtle);padding-bottom:16px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:flex-start;gap:16px;">
+          <div class="resume-header-block">
             <div>
               <h2 style="font-size:1.8rem;color:#00F0FF;margin-bottom:4px;">ROHIT MAJHI</h2>
               <div
@@ -2374,18 +2407,18 @@
   <!-- ====================================================================
        TOAST FEEDBACK ELEMENT
        ==================================================================== -->
-  <div class="cyber-toast" id="cyber-toast" role="status" aria-live="polite">
+  <!-- <div class="cyber-toast" id="cyber-toast" role="status" aria-live="polite">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00F0FF" stroke-width="2" aria-hidden="true">
       <polyline points="20 6 9 17 4 12"></polyline>
     </svg>
     <span id="toast-text">Action successful</span>
-  </div>
-
-  <!-- Scripts -->
+  </div> -->
+<!-- Scripts -->
   <script src="scripts/sound.js"></script>
   <script src="scripts/canvas.js"></script>
   <script src="scripts/terminal.js"></script>
   <script src="scripts/app.js"></script>
+  <script type="module" src="scripts/mimi-overlay.js"></script>
 </body>
 
 </html>

@@ -24,6 +24,7 @@
   - <span class="brand-tag">projects</span>     : Inspect flagship security architectures
   - <span class="brand-tag">simulations</span>  : Review enterprise job simulations (Forage)
   - <span class="brand-tag">certs</span>        : View ISOEH, Coursera & Google credentials
+  - <span class="brand-tag">guide</span>        : Summon Mimi, our 3D Guide (1.5 MB, 12 animations)
   - <span class="brand-tag">contact</span>      : Transmit direct communication packet
   - <span class="brand-tag">scan</span>         : Initiate simulated vulnerability scan
   - <span class="brand-tag">clear</span>        : Wipe terminal buffer
@@ -74,12 +75,22 @@ Education: M.Sc. Cyber Security Forensic (Parul Univ) | B.Sc. Networking & Cyber
 [+] Checking Ports 22/tcp, 80/tcp, 443/tcp, 8080/tcp...
 [!] Port 443/tcp OPEN (HTTPS - TLS 1.3 Strict Transport Security)
 [!] Port 22/tcp FILTERED (Zero unauthorized access)
-[✓] Scan Complete: 0 vulnerabilities found. Perimeter hardened.`
+[✓] Scan Complete: 0 vulnerabilities found. Perimeter hardened.`,
+
+    guide: `[🤖 3D SENTINEL GUIDANCE SYSTEM]
+Our own 3D guide. Rigged in Blender, running live in the browser.
+Payload: <span style="color:#00F0FF;">1.5 MB</span> | Animations: <span style="color:#00F0FF;">12 motion clips</span> | Drag her and she spins!
+Status: <span style="color:#10B981;">[ONLINE // 60 FPS]</span>
+Commands: Try typing <span style="color:#00F0FF;">wave</span>, <span style="color:#00F0FF;">hop</span>, <span style="color:#00F0FF;">think</span>, or <span style="color:#00F0FF;">spin</span> to command her directly!`,
+
+    mimi: `[🤖 MIMI 3D GUIDE]
+Rigged in Blender, running live in the browser. You've met her. 1.5 MB, 12 animations. Drag her and she spins.`
   };
 
   function openTerminal() {
     modal.classList.add('is-open');
     modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
     termInput.focus();
     if (window.CyberAudio) window.CyberAudio.playClick();
   }
@@ -87,6 +98,7 @@ Education: M.Sc. Cyber Security Forensic (Parul Univ) | B.Sc. Networking & Cyber
   function closeTerminal() {
     modal.classList.remove('is-open');
     modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
     if (window.CyberAudio) window.CyberAudio.playClick();
   }
 
@@ -130,6 +142,27 @@ Education: M.Sc. Cyber Security Forensic (Parul Univ) | B.Sc. Networking & Cyber
 
       if (cmd === 'exit') {
         closeTerminal();
+        return;
+      }
+
+      if (cmd === 'spin') {
+        if (window.MimiGuide) {
+          window.MimiGuide.spin(Math.PI * 4);
+          appendOutput(`<span style="color:#00F0FF;">[3D GUIDE] Initiating 720° high-speed rotational telemetry spin!</span>`);
+        } else {
+          appendOutput(`<span style="color:#00F0FF;">[3D GUIDE] Mimi is standing by on the holo-stage.</span>`);
+        }
+        return;
+      }
+
+      const mimiAnims = ['wave', 'hop', 'think', 'nod', 'look_around', 'point_left', 'point_right', 'ear_wiggle', 'travel', 'settle', 'blink'];
+      if (mimiAnims.includes(cmd)) {
+        if (window.MimiGuide) {
+          window.MimiGuide.play(cmd);
+          appendOutput(`<span style="color:#10B981;">[3D GUIDE] Executing motion clip: ${cmd.toUpperCase()}</span>`);
+        } else {
+          appendOutput(`<span style="color:#00F0FF;">[3D GUIDE] Executing motion clip: ${cmd.toUpperCase()}</span>`);
+        }
         return;
       }
 

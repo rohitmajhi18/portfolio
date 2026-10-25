@@ -840,6 +840,29 @@ main {
   background: rgba(255, 255, 255, 0.03);
 }
 
+.btn-cyber-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 18px;
+  border-radius: 8px;
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid var(--border-cyan-subtle);
+  color: var(--text-pure);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  transition: all var(--transition-fast);
+}
+
+.btn-cyber-ghost:hover {
+  background: var(--cyber-cyan-dim);
+  border-color: var(--cyber-cyan);
+  color: var(--cyber-cyan);
+  box-shadow: 0 0 16px var(--cyber-cyan-glow);
+}
+
 /* Hero HUD Metrics Bar */
 .hero-hud-metrics {
   margin-top: 48px;
@@ -903,8 +926,8 @@ main {
 
 .operator-avatar-img {
   width: 100%;
-  height: 200;
-  /* aspect-ratio: 4/5; */
+  height: 280px;
+  aspect-ratio: 4/5;
   object-fit: cover;
   object-position: top center;
   display: block;
@@ -1202,6 +1225,8 @@ main {
   color: var(--text-muted);
   border-bottom: 1px solid var(--border-slate-subtle);
   padding-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .arch-status {
@@ -1211,10 +1236,33 @@ main {
   color: var(--threat-emerald);
 }
 
+.arch-scroll-indicator {
+  display: none;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--cyber-cyan);
+  text-align: center;
+  padding: 4px 8px;
+  margin-bottom: 8px;
+  letter-spacing: 0.05em;
+  background: rgba(0, 240, 255, 0.06);
+  border: 1px solid var(--border-cyan-subtle);
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .arch-scroll-indicator {
+    display: block;
+  }
+}
+
 .pipeline-diagram {
   width: 100%;
   overflow-x: auto;
   padding: 10px 0;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-cyan-subtle) transparent;
 }
 
 .pipeline-diagram svg {
@@ -1318,9 +1366,11 @@ main {
   margin-bottom: 24px;
   scrollbar-width: thin;
   scrollbar-color: var(--border-cyan-subtle) transparent;
+  -webkit-overflow-scrolling: touch;
 }
 
 .arsenal-tab-btn {
+  flex-shrink: 0;
   white-space: nowrap;
   padding: 8px 16px;
   border-radius: 6px;
@@ -1330,6 +1380,8 @@ main {
   font-family: var(--font-mono);
   font-size: 0.8rem;
   transition: all var(--transition-fast);
+  cursor: pointer;
+  min-height: 42px;
 }
 
 .arsenal-tab-btn.is-active,
@@ -2123,12 +2175,827 @@ main {
   transform: translateY(0);
 }
 
+/* Modal Helper Classes */
+.modal-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.resume-header-block {
+  border-bottom: 1px solid var(--border-cyan-subtle);
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+/* ==========================================================================
+   MIMI 3D COMPANION // LIVE BROWSER OVERLAY CHARACTER
+   "Rigged in Blender, running live in the browser.
+    1.5 MB, 12 animations. Drag her and she spins."
+   ========================================================================== */
+.mimi-overlay-host {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 220px;
+  height: 240px;
+  z-index: 990;
+  pointer-events: auto;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  will-change: transform;
+  transform-origin: center center;
+}
+
+.mimi-overlay-host.is-dragging {
+  cursor: grabbing;
+}
+
+.mimi-overlay-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mimi-overlay-canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+.mimi-overlay-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  z-index: 2;
+}
+
+.mimi-overlay-halo {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130px;
+  height: 36px;
+  background: radial-gradient(ellipse at center, rgba(0, 240, 255, 0.4) 0%, rgba(16, 185, 129, 0.15) 50%, transparent 80%);
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(6px);
+  animation: holo-pulse 3s ease-in-out infinite alternate;
+}
+
+/* Floating Cyber Speech Bubble attached to Mimi */
+.mimi-overlay-bubble {
+  position: absolute;
+  bottom: calc(100% - 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  min-width: 190px;
+  max-width: 260px;
+  background: rgba(6, 9, 14, 0.95);
+  border: 1px solid var(--border-cyan-bright);
+  padding: 8px 14px;
+  border-radius: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  line-height: 1.45;
+  color: var(--cyber-cyan);
+  text-align: center;
+  pointer-events: none;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8), 0 0 16px rgba(0, 240, 255, 0.3);
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 995;
+}
+
+.mimi-overlay-bubble.is-open {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.mimi-overlay-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background: rgba(6, 9, 14, 0.95);
+  border-right: 1px solid var(--border-cyan-bright);
+  border-bottom: 1px solid var(--border-cyan-bright);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+@media (max-width: 767px) {
+  .mimi-overlay-host {
+    width: 130px;
+    height: 140px;
+  }
+
+  .mimi-overlay-bubble {
+    font-size: 0.7rem;
+    min-width: 140px;
+    max-width: 180px;
+    padding: 6px 10px;
+  }
+}
+
 /* --------------------------------------------------------------------------
-   16. PROGRESSIVE ENHANCEMENT: BREAKPOINTS (TABLET & DESKTOP)
+   16. COMPREHENSIVE RESPONSIVE SYSTEM (MOBILE, TABLET & DESKTOP)
    -------------------------------------------------------------------------- */
 
-/* sm: 640px and up */
-@media (min-width: 640px) {
+/* ==========================================================================
+   MOBILE DEVICES (Viewports <= 640px)
+   ========================================================================== */
+@media (max-width: 640px) {
+  /* Navigation & Header */
+  .header-container {
+    padding: 0 12px;
+  }
+
+  #btn-guide-anchor {
+    display: none; /* Docked floating 3D guide is active on mobile */
+  }
+
+  #btn-open-terminal {
+    width: 42px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  #btn-open-terminal .hud-btn-text {
+    display: none;
+  }
+
+  .brand-identity {
+    gap: 8px;
+  }
+
+  .brand-shield {
+    width: 32px;
+    height: 32px;
+  }
+
+  .brand-logo-text {
+    font-size: 0.95rem;
+  }
+
+  .cyber-hamburger {
+    width: 44px;
+    height: 44px;
+    padding: 8px;
+  }
+
+  /* Command Overlay Drawer on Mobile */
+  .cyber-drawer {
+    max-width: 100%;
+    border-left: none;
+    padding: calc(var(--header-height) + 12px) 16px calc(24px + env(safe-area-inset-bottom, 0px)) 16px;
+  }
+
+  .drawer-header {
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+  }
+
+  .drawer-protocol-title {
+    font-size: 0.75rem;
+  }
+
+  .drawer-system-clock {
+    font-size: 0.7rem;
+  }
+
+  .drawer-nav-link {
+    padding: 12px 14px;
+    font-size: 0.98rem;
+    min-height: 48px;
+  }
+
+  .drawer-telemetry {
+    margin-top: 16px;
+    padding: 12px;
+    font-size: 0.7rem;
+  }
+
+  .drawer-actions {
+    margin-top: 14px;
+    gap: 8px;
+  }
+
+  .drawer-action-btn {
+    height: 44px;
+    font-size: 0.75rem;
+    padding: 0 10px;
+  }
+
+  /* Section Spacing & Containers */
+  .cyber-section {
+    padding: 50px 0;
+  }
+
+  .section-header-block {
+    margin-bottom: 32px;
+  }
+
+  .section-label {
+    font-size: 0.72rem;
+  }
+
+  /* Hero Section Mobile */
+  .hero-section {
+    padding: 20px 0 50px 0;
+    min-height: auto;
+  }
+
+  .hero-status-pill {
+    max-width: 100%;
+    padding: 6px 12px;
+    font-size: 0.74rem;
+    flex-wrap: wrap;
+    line-height: 1.4;
+  }
+
+  .hero-headline {
+    font-size: clamp(1.75rem, 7vw, 2.5rem);
+    margin-bottom: 16px;
+    word-break: break-word;
+  }
+
+  .hero-subheadline {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  .hero-cta-group {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .hero-cta-group .btn-cyber-primary,
+  .hero-cta-group .btn-cyber-secondary,
+  .hero-cta-group .btn-cyber-outline {
+    width: 100%;
+    justify-content: center;
+    height: 48px;
+    font-size: 0.92rem;
+  }
+
+  .hero-hud-metrics {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 14px;
+    margin-top: 28px;
+  }
+
+  .hud-stat-num {
+    font-size: 1.65rem;
+  }
+
+  .hud-stat-label {
+    font-size: 0.68rem;
+  }
+
+  .hero-operator-card {
+    max-width: 310px;
+    margin: 16px auto 0;
+    padding: 14px;
+  }
+
+  .operator-avatar-img {
+    height: 260px;
+  }
+
+  /* 3D Guide Mimi Mobile */
+  .mimi-guide-section {
+    padding: 40px 0 60px;
+  }
+
+  .mimi-stage-card {
+    padding: 20px 14px 18px;
+    border-radius: 16px;
+  }
+
+  .mimi-stage-container {
+    max-width: 300px;
+    height: min(300px, 75vw);
+  }
+
+  .mimi-speech-bubble {
+    max-width: 270px;
+    font-size: 0.76rem;
+    padding: 8px 12px;
+  }
+
+  .mimi-tagline {
+    font-size: 0.95rem;
+  }
+
+  .mimi-specs-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .mimi-spec-val {
+    font-size: 0.78rem;
+  }
+
+  .mimi-anim-btn {
+    font-size: 0.72rem;
+    padding: 6px 10px;
+    min-height: 38px;
+  }
+
+  .mimi-tour-btn {
+    font-size: 0.72rem;
+    padding: 6px 10px;
+    min-height: 38px;
+  }
+
+  .mimi-telemetry-bar {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    padding: 8px 12px;
+  }
+
+  .floating-guide-trigger {
+    bottom: 16px;
+    right: 14px;
+    padding: 6px 12px 6px 8px;
+    font-size: 0.72rem;
+  }
+
+  /* Toast Notification Mobile */
+  .cyber-toast {
+    bottom: 68px;
+    left: 14px;
+    right: 14px;
+    max-width: calc(100% - 28px);
+    justify-content: center;
+    font-size: 0.78rem;
+    padding: 10px 14px;
+  }
+
+  /* Bento Capabilities Mobile */
+  .capabilities-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .bento-capability-card {
+    padding: 20px 16px;
+  }
+
+  .card-title {
+    font-size: 1.15rem;
+  }
+
+  .card-desc {
+    font-size: 0.88rem;
+    margin-bottom: 16px;
+  }
+
+  /* Projects Section Mobile */
+  .projects-container {
+    gap: 28px;
+  }
+
+  .project-feature-card {
+    padding: 18px 14px;
+  }
+
+  .project-title {
+    font-size: 1.35rem;
+  }
+
+  .project-desc {
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+  }
+
+  .architecture-visualizer {
+    padding: 14px 12px;
+  }
+
+  .arch-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .arch-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .btn-simulate-packet {
+    width: 100%;
+    justify-content: center;
+    font-size: 0.75rem;
+    padding: 10px 14px;
+  }
+
+  .project-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .project-actions .btn-cyber-primary,
+  .project-actions .btn-cyber-outline {
+    width: 100%;
+    justify-content: center;
+    height: 46px;
+  }
+
+  /* Technical Arsenal Mobile */
+  .arsenal-tab-btn {
+    font-size: 0.75rem;
+    padding: 6px 12px;
+  }
+
+  .arsenal-search-input {
+    font-size: 16px;
+    height: 44px;
+    padding-left: 40px;
+  }
+
+  .arsenal-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .skill-card {
+    padding: 12px 14px;
+  }
+
+  .skill-name {
+    font-size: 0.9rem;
+  }
+
+  /* Industry Simulations Mobile */
+  .simulations-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .simulation-card {
+    padding: 18px 14px;
+  }
+
+  .sim-company-badge {
+    font-size: 1.05rem;
+  }
+
+  .sim-title {
+    font-size: 0.98rem;
+  }
+
+  .sim-desc {
+    font-size: 0.86rem;
+  }
+
+  .btn-view-cert {
+    width: 100%;
+    justify-content: center;
+    height: 44px;
+  }
+
+  /* Education & Certifications Mobile */
+  .academic-timeline {
+    padding-left: 18px;
+  }
+
+  .timeline-node {
+    padding: 16px 14px;
+  }
+
+  .timeline-node::before {
+    left: -19px;
+    width: 11px;
+    height: 11px;
+    top: 22px;
+  }
+
+  .timeline-degree {
+    font-size: 1.05rem;
+  }
+
+  .certifications-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .cert-card {
+    padding: 16px 14px;
+  }
+
+  .cert-title {
+    font-size: 0.98rem;
+  }
+
+  /* Contact & Footer Mobile */
+  .interests-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .interest-card {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .contact-wrapper {
+    gap: 28px;
+  }
+
+  .terminal-top-bar {
+    padding: 10px 14px;
+  }
+
+  .terminal-title {
+    font-size: 0.68rem;
+  }
+
+  .terminal-form {
+    padding: 16px 14px;
+    gap: 14px;
+  }
+
+  .form-input,
+  .form-textarea,
+  .form-select {
+    font-size: 16px;
+    padding: 10px 12px;
+  }
+
+  .channel-card {
+    padding: 12px 14px;
+  }
+
+  .channel-val {
+    font-size: 0.78rem;
+    word-break: break-all;
+  }
+
+  .cyber-footer {
+    padding: 32px 0 50px 0;
+  }
+
+  /* Modals Mobile Viewport */
+  .modal-backdrop {
+    padding: 8px;
+  }
+
+  .modal-content-box {
+    max-height: 94dvh;
+    border-radius: 12px;
+  }
+
+  .modal-header {
+    padding: 12px 14px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .modal-title {
+    font-size: 0.85rem;
+    max-width: calc(100% - 46px);
+  }
+
+  .modal-header-actions .btn-text {
+    display: none;
+  }
+
+  .modal-header-actions .btn-cyber-primary,
+  .modal-header-actions .btn-cyber-ghost {
+    padding: 0 10px;
+    height: 36px;
+  }
+
+  .modal-body {
+    padding: 14px 12px;
+  }
+
+  .cert-modal-meta {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    padding: 8px 10px;
+    font-size: 0.72rem;
+  }
+
+  .cert-preview-viewport {
+    min-height: 220px;
+    max-height: 48vh;
+  }
+
+  .cert-preview-img {
+    max-height: 46vh;
+  }
+
+  .cert-preview-iframe {
+    height: 46vh;
+    min-height: 240px;
+  }
+
+  .resume-header-block {
+    flex-direction: column-reverse;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+  }
+}
+
+/* ==========================================================================
+   EXTRA-SMALL PHONES (Viewports <= 380px)
+   ========================================================================== */
+@media (max-width: 380px) {
+  .header-container {
+    padding: 0 8px;
+  }
+
+  .brand-logo-text {
+    font-size: 0.88rem;
+  }
+
+  .brand-status-node span:not(.pulse-dot) {
+    display: none;
+  }
+
+  .brand-status-node {
+    padding: 4px;
+    margin-left: 2px;
+  }
+
+  .floating-guide-trigger span:not(.floating-guide-beacon) {
+    display: none;
+  }
+
+  .floating-guide-trigger {
+    padding: 6px;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    justify-content: center;
+  }
+
+  .hero-hud-metrics {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    padding: 10px;
+  }
+
+  .hud-stat-num {
+    font-size: 1.4rem;
+  }
+}
+
+/* ==========================================================================
+   TABLET DEVICES (Viewports: 641px to 1023px)
+   ========================================================================== */
+@media (min-width: 641px) and (max-width: 1023px) {
+  .cyber-section {
+    padding: 70px 0;
+  }
+
+  /* Tablet Hero Layout: side-by-side or balanced */
+  .hero-section {
+    padding: 30px 0 60px 0;
+  }
+
+  .hero-cta-group {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .hero-hud-metrics {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .capabilities-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+
+  .simulations-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+
+  .arsenal-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .certifications-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .interests-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .contact-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .mimi-bento-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .mimi-stage-container {
+    max-width: 350px;
+    height: 350px;
+  }
+
+  .mimi-specs-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .modal-backdrop {
+    padding: 20px;
+  }
+
+  .modal-content-box {
+    max-width: 720px;
+    max-height: 88vh;
+  }
+
+  .cert-preview-viewport {
+    min-height: 360px;
+    max-height: 52vh;
+  }
+}
+
+/* Specific enhancements for iPad / Tablet Portrait (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 280px;
+    gap: 28px;
+    align-items: center;
+  }
+
+  .hero-operator-card {
+    max-width: 280px;
+    margin: 0;
+  }
+
+  .hero-hud-metrics {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 880px) and (max-width: 1023px) {
+  .arsenal-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .mimi-bento-grid {
+    grid-template-columns: 1.05fr 1fr;
+    gap: 36px;
+  }
+}
+
+/* ==========================================================================
+   DESKTOP & LARGE DISPLAYS (Viewports >= 1024px)
+   ========================================================================== */
+@media (min-width: 1024px) {
+  .cyber-section {
+    padding: 95px 0;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: start;
+    gap: 48px;
+  }
+
   .hero-cta-group {
     flex-direction: row;
     flex-wrap: wrap;
@@ -2138,59 +3005,19 @@ main {
     grid-template-columns: repeat(4, 1fr);
   }
 
-  .arsenal-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .certifications-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .interests-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* md: 768px and up */
-@media (min-width: 768px) {
-  .cyber-section {
-    padding: 110px 0;
-  }
-
-  .capabilities-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .simulations-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .contact-wrapper {
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 32px;
-  }
-}
-
-/* lg: 1024px and up */
-@media (min-width: 1024px) {
-  .hero-grid {
-    display: grid;
-    grid-template-columns: 1.15fr 0.85fr;
-    align-items: start;
-    gap: 48px;
-  }
-
   .capabilities-grid {
     grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
   }
 
   .arsenal-grid {
     grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
   }
 
   .simulations-grid {
     grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
   }
 
   .edu-cert-wrapper {
@@ -2199,14 +3026,37 @@ main {
     gap: 40px;
   }
 
+  .certifications-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .interests-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .contact-wrapper {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 32px;
+  }
+
   .footer-content {
     flex-direction: row;
     justify-content: space-between;
     text-align: left;
   }
+
+  .mimi-bento-grid {
+    grid-template-columns: 1.05fr 1fr;
+    gap: 48px;
+  }
 }
 
-/* xl: 1280px and up */
+/* ==========================================================================
+   EXTRA-WIDE DESKTOP (Viewports >= 1280px)
+   ========================================================================== */
 @media (min-width: 1280px) {
   .section-container {
     padding: 0 32px;
@@ -2309,7 +3159,9 @@ main {
   #cyber-canvas,
   .hero-cta-group,
   .terminal-contact-box,
-  .cyber-footer {
+  .cyber-footer,
+  .mimi-guide-section,
+  .floating-guide-trigger {
     display: none !important;
   }
 

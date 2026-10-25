@@ -430,6 +430,7 @@
     if (resumeModal) {
       resumeModal.classList.add('is-open');
       resumeModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
       if (window.CyberAudio) window.CyberAudio.playClick();
     }
   }
@@ -438,6 +439,7 @@
     if (resumeModal) {
       resumeModal.classList.remove('is-open');
       resumeModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
       if (window.CyberAudio) window.CyberAudio.playClick();
     }
   }
