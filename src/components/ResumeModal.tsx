@@ -159,10 +159,10 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                 Professional Summary
               </h4>
               <p style={{ fontSize: "0.92rem", color: "var(--text-primary)" }}>
-                Cybersecurity graduate student with hands-on experience in Ethical Hacking, Penetration Testing,
-                Vulnerability Assessment, Network Security, and AI-powered Intrusion Detection Systems. Proficient in
-                Python, Kali Linux, Git, Active Directory, Cloud Security, and risk assessment. Seeking roles as a
-                Cybersecurity Analyst or Penetration Tester.
+                Cybersecurity Analyst &amp; Penetration Tester with hands-on experience in offensive and defensive
+                security operations, Vulnerability Assessment and Penetration Testing (VAPT), network defense, and
+                AI-powered Intrusion Detection Systems. Proficient in Python, Kali Linux, Git, Active Directory, Cloud
+                Security, and security risk assessment.
               </p>
             </div>
 

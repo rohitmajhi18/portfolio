@@ -133,7 +133,7 @@ export default function RootLayout({
         name: "Rohit Majhi",
         jobTitle: "Cybersecurity Analyst & Penetration Tester",
         description:
-          "Cybersecurity Graduate Student specializing in Ethical Hacking, Penetration Testing, Vulnerability Assessment, Network Security, and AI-powered Intrusion Detection Systems.",
+          "Cybersecurity Analyst & Penetration Tester specializing in offensive and defensive security operations, Vulnerability Assessment and Penetration Testing (VAPT), network defense, and AI-powered Intrusion Detection Systems.",
         url: "https://rohitmajhi.in/",
         image: "https://rohitmajhi.in/image/icon.jpg",
         email: "mailto:rohit629510@gmail.com",
