@@ -64,18 +64,21 @@
       this.vx = this.baseVx;
       this.vy = this.baseVy;
       this.radius = Math.random() * 1.8 + 1.2;
-      
-      // Node roles: 0 = Standard Cyan node, 1 = Emerald SOC node, 2 = Crimson Alert node
+
+      // Node roles: Brand Red, Brand Soft Red, Threat Emerald
       const rand = Math.random();
-      if (rand > 0.85) {
-        this.type = 'crimson';
-        this.color = '#F43F5E';
-      } else if (rand > 0.65) {
+      if (rand > 0.8) {
+        this.type = 'brand-red';
+        this.color = '#D00303';
+      } else if (rand > 0.6) {
         this.type = 'emerald';
         this.color = '#10B981';
+      } else if (rand > 0.3) {
+        this.type = 'soft-red';
+        this.color = '#E15D5E';
       } else {
-        this.type = 'cyan';
-        this.color = '#00F0FF';
+        this.type = 'muted-gray';
+        this.color = '#A2A3A5';
       }
     }
 
@@ -125,7 +128,7 @@
       this.end = endNode;
       this.progress = 0;
       this.speed = Math.random() * 0.015 + 0.008;
-      this.color = color || '#00F0FF';
+      this.color = color || '#D00303';
       this.size = 2.2;
     }
 
@@ -249,7 +252,7 @@
           ctx.beginPath();
           ctx.moveTo(nodes[i].x, nodes[i].y);
           ctx.lineTo(nodes[j].x, nodes[j].y);
-          ctx.strokeStyle = `rgba(56, 189, 248, ${alpha})`;
+          ctx.strokeStyle = `rgba(208, 3, 3, ${alpha * 0.75})`;
           ctx.lineWidth = 0.85;
           ctx.stroke();
         }

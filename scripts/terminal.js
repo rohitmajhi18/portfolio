@@ -30,7 +30,7 @@
   - <span class="brand-tag">clear</span>        : Wipe terminal buffer
   - <span class="brand-tag">exit</span>         : Terminate session`,
 
-    whoami: `Operator: <span style="color:#00F0FF;font-weight:bold;">Rohit Majhi</span>
+    whoami: `Operator: <span style="color:#E15D5E;font-weight:bold;">Rohit Majhi</span>
 Specialization: Ethical Hacking, Penetration Testing & AI Intrusion Detection
 Location: Hooghly, West Bengal, India
 Status: <span style="color:#10B981;">[OPEN]</span> Available for Cybersecurity Analyst & Penetration Tester roles
@@ -42,11 +42,11 @@ Education: M.Sc. Cyber Security Forensic (Parul Univ) | B.Sc. Networking & Cyber
   [AUTOMATION] Python, Flask, Scikit-learn, Terraform (IaC), AWS GuardDuty, CloudTrail, Git, Active Directory`,
 
     projects: `Flagship Architectures:
-  01. <span style="color:#00F0FF;">NetSentinel AI</span>: Machine learning network intrusion detection system (Flask, Scikit-learn, PCAP classification)
-      Live App: <a href="https://netsentinelai.rohitmajhi.in/" target="_blank" style="color:#00F0FF;text-decoration:underline;">https://netsentinelai.rohitmajhi.in/</a>
+  01. <span style="color:#E15D5E;">NetSentinel AI</span>: Machine learning network intrusion detection system (Flask, Scikit-learn, PCAP classification)
+      Live App: <a href="https://netsentinelai.rohitmajhi.in/" target="_blank" style="color:#E15D5E;text-decoration:underline;">https://netsentinelai.rohitmajhi.in/</a>
       Repo: https://github.com/rohitmajhi18/NetSentinel-AI
-  02. <span style="color:#00F0FF;">AWS Cloud SOC</span>: Serverless threat ingestion & automated incident containment (GuardDuty, EventBridge, Lambda, Terraform)
-      Live App: <a href="https://aws-soc.vercel.app/" target="_blank" style="color:#00F0FF;text-decoration:underline;">https://aws-soc.vercel.app/</a>
+  02. <span style="color:#E15D5E;">AWS Cloud SOC</span>: Serverless threat ingestion & automated incident containment (GuardDuty, EventBridge, Lambda, Terraform)
+      Live App: <a href="https://aws-soc.vercel.app/" target="_blank" style="color:#E15D5E;text-decoration:underline;">https://aws-soc.vercel.app/</a>
       Repo: https://github.com/rohitmajhi18/aws-soc`,
 
     simulations: `Enterprise Simulations (Forage):
@@ -66,10 +66,10 @@ Education: M.Sc. Cyber Security Forensic (Parul Univ) | B.Sc. Networking & Cyber
   - Introduction to Ethical Hacking Principles (Skill Up)`,
 
     contact: `Secure Communication Channels:
-  Email: <a href="mailto:rohit629510@gmail.com" style="color:#00F0FF;">rohit629510@gmail.com</a>
-  Phone: <a href="tel:+916295103573" style="color:#00F0FF;">+91-6295103573</a>
-  LinkedIn: <a href="https://linkedin.com/in/rohit-majhi18/" target="_blank" style="color:#00F0FF;">linkedin.com/in/rohit-majhi18/</a>
-  GitHub: <a href="https://github.com/rohitmajhi18" target="_blank" style="color:#00F0FF;">github.com/rohitmajhi18</a>`,
+  Email: <a href="mailto:rohit629510@gmail.com" style="color:#E15D5E;">rohit629510@gmail.com</a>
+  Phone: <a href="tel:+916295103573" style="color:#E15D5E;">+91-6295103573</a>
+  LinkedIn: <a href="https://linkedin.com/in/rohit-majhi18/" target="_blank" style="color:#E15D5E;">linkedin.com/in/rohit-majhi18/</a>
+  GitHub: <a href="https://github.com/rohitmajhi18" target="_blank" style="color:#E15D5E;">github.com/rohitmajhi18</a>`,
 
     scan: `[+] Initializing SYN Stealth Scan (Target: 127.0.0.1)...
 [+] Checking Ports 22/tcp, 80/tcp, 443/tcp, 8080/tcp...
@@ -79,9 +79,9 @@ Education: M.Sc. Cyber Security Forensic (Parul Univ) | B.Sc. Networking & Cyber
 
     guide: `[🤖 3D SENTINEL GUIDANCE SYSTEM]
 Our own 3D guide. Rigged in Blender, running live in the browser.
-Payload: <span style="color:#00F0FF;">1.5 MB</span> | Animations: <span style="color:#00F0FF;">12 motion clips</span> | Drag her and she spins!
+Payload: <span style="color:#E15D5E;">1.5 MB</span> | Animations: <span style="color:#E15D5E;">12 motion clips</span> | Drag her and she spins!
 Status: <span style="color:#10B981;">[ONLINE // 60 FPS]</span>
-Commands: Try typing <span style="color:#00F0FF;">wave</span>, <span style="color:#00F0FF;">hop</span>, <span style="color:#00F0FF;">think</span>, or <span style="color:#00F0FF;">spin</span> to command her directly!`,
+Commands: Try typing <span style="color:#E15D5E;">wave</span>, <span style="color:#E15D5E;">hop</span>, <span style="color:#E15D5E;">think</span>, or <span style="color:#E15D5E;">spin</span> to command her directly!`,
 
     mimi: `[🤖 MIMI 3D GUIDE]
 Rigged in Blender, running live in the browser. You've met her. 1.5 MB, 12 animations. Drag her and she spins.`
@@ -148,9 +148,9 @@ Rigged in Blender, running live in the browser. You've met her. 1.5 MB, 12 anima
       if (cmd === 'spin') {
         if (window.MimiGuide) {
           window.MimiGuide.spin(Math.PI * 4);
-          appendOutput(`<span style="color:#00F0FF;">[3D GUIDE] Initiating 720° high-speed rotational telemetry spin!</span>`);
+          appendOutput(`<span style="color:#E15D5E;">[3D GUIDE] Initiating 720° high-speed rotational telemetry spin!</span>`);
         } else {
-          appendOutput(`<span style="color:#00F0FF;">[3D GUIDE] Mimi is standing by on the holo-stage.</span>`);
+          appendOutput(`<span style="color:#E15D5E;">[3D GUIDE] Mimi is standing by on the holo-stage.</span>`);
         }
         return;
       }
@@ -161,7 +161,7 @@ Rigged in Blender, running live in the browser. You've met her. 1.5 MB, 12 anima
           window.MimiGuide.play(cmd);
           appendOutput(`<span style="color:#10B981;">[3D GUIDE] Executing motion clip: ${cmd.toUpperCase()}</span>`);
         } else {
-          appendOutput(`<span style="color:#00F0FF;">[3D GUIDE] Executing motion clip: ${cmd.toUpperCase()}</span>`);
+          appendOutput(`<span style="color:#E15D5E;">[3D GUIDE] Executing motion clip: ${cmd.toUpperCase()}</span>`);
         }
         return;
       }
@@ -169,7 +169,7 @@ Rigged in Blender, running live in the browser. You've met her. 1.5 MB, 12 anima
       if (COMMANDS[cmd]) {
         appendOutput(COMMANDS[cmd]);
       } else {
-        appendOutput(`<span style="color:#F43F5E;">rm-sh: command not found: ${escapeHTML(cmd)}. Type <span style="color:#00F0FF;">help</span> for commands.</span>`);
+        appendOutput(`<span style="color:#D00303;">rm-sh: command not found: ${escapeHTML(cmd)}. Type <span style="color:#E15D5E;">help</span> for commands.</span>`);
         if (window.CyberAudio) window.CyberAudio.playAlert();
       }
     }

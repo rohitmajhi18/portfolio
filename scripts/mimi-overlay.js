@@ -64,11 +64,11 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
   keyLight.shadow.bias = -0.0004;
   scene.add(keyLight);
 
-  const fillLight = new THREE.DirectionalLight(0x00f0ff, 1.3);
+  const fillLight = new THREE.DirectionalLight(0xE15D5E, 1.3);
   fillLight.position.set(0.6, 0.25, 0.4);
   scene.add(fillLight);
 
-  const rimLight = new THREE.DirectionalLight(0x10b981, 1.1);
+  const rimLight = new THREE.DirectionalLight(0xD00303, 1.1);
   rimLight.position.set(0, 0.3, -0.6);
   scene.add(rimLight);
 
